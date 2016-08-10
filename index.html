@@ -78,7 +78,7 @@
         if (strikeshrough)   { final.css("text-decoration", "line-through"); styleString += " text-decoration: line-through; "; }
         if (overline)        { final.css("text-decoration", "overline"); styleString += " text-decoration: overline; "; }
         if (smallcaps)       { final.css("font-variant", "small-caps"); styleString += " font-variant: small-caps; "; }
-        if (shadow)          { final.css('textShadow', "#" + shadowcolor + " " + shadow1 + "px " + shadow2 + "px " + shadow3 + "px"); styleString += "text-shadow: " + shadow1 + "px " + shadow2 + "px " + shadow3 + "px " + shadow4 + "px " + "#" + shadowcolor + ";"; }
+        if (shadow)          { final.css('textShadow', "#" + shadowcolor + " " + shadow1 + "px " + shadow2 + "px " + shadow3 + "px"); styleString += "text-shadow: " + shadow1 + "px " + shadow2 + "px " + shadow3 + "px " + "#" + shadowcolor + ";"; }
         if (style != "none") { final.css("background-image", "url(https://raw.githubusercontent.com/Nyqi/animated-tags/gh-pages/sparkles/" + style + ".gif)"); styleString += " background-image: url(" + sparklesurl + "/" + style + ".gif); "; }
         /* Color */          final.css("color", "#" + color); styleString += " color: #" + color + "; ";
         /* Preview Text */   final.text(previewtext);
