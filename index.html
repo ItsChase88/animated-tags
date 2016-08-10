@@ -1,1 +1,40 @@
-Hello world.
+<!doctype html>
+<html>
+  <head>
+    <title>Animated Tags Generator</title>
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js" type="text/javascript"></script>
+  </head>
+  
+  <body>
+    <div style="float: left;">
+      <p>
+        <label for="bold">Bold?</label>
+        <input name="bold" type="checkbox">
+      </p>
+      <p>
+        <label for="italic">Italic?</label>
+        <input name="italic" type="checkbox">
+      </p>
+      <p>
+        <label for="underline">Underline?</label>
+        <input name="underline" type="checkbox">
+      </p>
+      <p>
+        <label for="strikethrough">Strikethrough?</label>
+        <input name="strikethrough" type="checkbox">
+      </p>
+    </div>
+    
+    <div style="float: left;">
+      <p>
+        <label for="color">Color</label>
+        <input name="color" class="jscolor" value="AB1111">
+      </p>
+      <p>
+        <label for="url">Sparkles URL</label>
+        <input name="url" type="url" placeholder="http://your-website.com/uploads/sparkles/">
+      </p>
+    </div>
+  </body>
+</html>
