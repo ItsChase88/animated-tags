@@ -5,46 +5,222 @@
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
     <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js" type="text/javascript"></script>
-    
+
     <style>
+      html {
+        background: url("https://raw.githubusercontent.com/Nyqi/animated-tags/gh-pages/bg.png");
+      }
       body {
         font-family: 'Roboto', sans-serif;
         width: 500px;
         height: 500px;
         margin: 0 auto;
       }
+      input {
+        font-family: 'Roboto', sans-serif;
+        letter-spacing: 0.3px;
+      }
+      input[type=number]::-webkit-inner-spin-button,
+      input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
     </style>
+
+    <script>
+      $(document).ready(function() {
+        generatePreview(false);
+
+        $("input, select").change(function() {
+          generatePreview(true);
+        });
+
+        $("input").keyup(function() {
+          generatePreview(false);
+        });
+
+        $(document).on("click, mouseover", "#finalLeft, #finalRight", function() {
+          $(this).select();
+        })
+      });
+
+      function generatePreview(change) {
+        var final         = $(".finalString");
+        var styleString   = "";
+        var bold          = $("#bold").is(":checked");
+        var underline     = $("#underline").is(":checked");
+        var italic        = $("#italic").is(":checked");
+        var strikeshrough = $("#strikethrough").is(":checked");
+        var overline      = $("#overline").is(":checked");
+        var smallcaps     = $("#smallcaps").is(":checked");
+        var style         = $("#animated").find(":selected").attr("value");
+        var color         = $("#color").val();
+        var shadow        = $("#shadow").is(":checked");
+        var shadow1       = $("#shadow1").val();
+        var shadow2       = $("#shadow2").val();
+        var shadow3       = $("#shadow3").val();
+        var shadowcolor   = $("#shadowcolor").val();
+        var previewtext   = $("#exampletext").val();
+        var sparklesurl   = $("#url").val();
+
+        if (change) {
+          if (shadow1.length == 0) { shadow1 = 0; $("#shadow1").val(0); }
+          if (shadow2.length == 0) { shadow2 = 0; $("#shadow2").val(0); }
+          if (shadow3.length == 0) { shadow3 = 0; $("#shadow3").val(0); }
+        }
+
+        $("#insertPreviewtext").text(previewtext);
+        final.removeAttr("style");
+
+        if (bold)            { final.css("font-weight", "bold"); styleString += " font-weight: bold; "; }
+        if (underline)       { final.css("text-decoration", "underline"); styleString += " text-decoration: underline; "; }
+        if (italic)          { final.css("font-style", "italic"); styleString += " font-style: italic; "; }
+        if (strikeshrough)   { final.css("text-decoration", "line-through"); styleString += " text-decoration: line-through; "; }
+        if (overline)        { final.css("text-decoration", "overline"); styleString += " text-decoration: overline; "; }
+        if (smallcaps)       { final.css("font-variant", "small-caps"); styleString += " font-variant: small-caps; "; }
+        if (shadow)          { final.css('textShadow', "#" + shadowcolor + " " + shadow1 + "px " + shadow2 + "px " + shadow3 + "px"); styleString += "text-shadow: " + shadow1 + "px " + shadow2 + "px " + shadow3 + "px " + shadow4 + "px " + "#" + shadowcolor + ";"; }
+        if (style != "none") { final.css("background-image", "url(https://raw.githubusercontent.com/Nyqi/animated-tags/gh-pages/sparkles/" + style + ".gif)"); styleString += " background-image: url(" + sparklesurl + "/" + style + ".gif); "; }
+        /* Color */          final.css("color", "#" + color); styleString += " color: #" + color + "; ";
+        /* Preview Text */   final.text(previewtext);
+
+        if (styleString.startsWith(" ")) styleString = styleString.substring(1);
+        if (styleString.endsWith(" "))   styleString = styleString.slice(0, -1);
+        $("#finalLeft").val("<span style='" + styleString + "'>");
+        $("#finalRight").val("</span>");
+      }
+    </script>
   </head>
-  
+
   <body>
-    <div style="float: left;">
-      <p>
-        <label for="bold">Bold?</label>
-        <input name="bold" type="checkbox">
-      </p>
-      <p>
-        <label for="italic">Italic?</label>
-        <input name="italic" type="checkbox">
-      </p>
-      <p>
-        <label for="underline">Underline?</label>
-        <input name="underline" type="checkbox">
-      </p>
-      <p>
-        <label for="strikethrough">Strikethrough?</label>
-        <input name="strikethrough" type="checkbox">
-      </p>
-    </div>
-    
-    <div style="float: left;">
-      <p>
-        <label for="color">Color</label>
-        <input name="color" class="jscolor" value="AB1111">
-      </p>
-      <p>
-        <label for="url">Sparkles URL</label>
-        <input name="url" type="url" placeholder="http://your-website.com/uploads/sparkles/">
-      </p>
-    </div>
+    <form>
+      <div style="text-align: center; margin: 20px; font-size: 120%; font-weight: bold;">
+        Fancy Animated Tags Generator<br />
+        <sup>Created for <a target="_blank" href="http://invision-virus.com/forum/index.php/topic/5455-fancy-animated-tags/">InvisionVirus.com</a></sup>
+      </div>
+
+      <div style="width: 500px; text-align: center;">
+        <p>
+          <label for="url">Sparkles URL:</label><br />
+          <input style="padding: 0 5px 0 5px; width: 350px; height: 30px; border: 1px solid #DBDBDB; outline: 0; box-shadow: 2px 2px 0 #D6D6D6;" id="url" type="url" placeholder="http://your-website.com/uploads/sparkles/">
+          <br />
+          <sup>URL to your <a href="https://github.com/Nyqi/animated-tags/raw/gh-pages/sparkles.zip">sparkles</a> folder.<br />Must be filled otherwise animated style will not work!</sup>
+        </p>
+      </div>
+
+      <div style="float: left; width: 166.666667px; text-align: center;">
+        <p>
+          <label style="font-weight: bold;" for="bold">Bold?</label><br />
+          <input id="bold" type="checkbox">
+        </p>
+        <p>
+          <label style="font-style: italic;" for="italic">Italic?</label><br />
+          <input id="italic" type="checkbox">
+        </p>
+      </div>
+
+      <div style="float: left; width: 166.666667px; text-align: center;">
+        <p>
+          <label style="text-decoration: underline;" for="underline">Underline?</label><br />
+          <input name="decoration" id="underline" type="radio">
+        </p>
+        <p>
+          <label style="text-decoration: line-through;" for="strikethrough">Strikethrough?</label><br />
+          <input name="decoration" id="strikethrough" type="radio">
+        </p>
+      </div>
+
+      <div style="float: left; width: 166.666667px; text-align: center;">
+        <p>
+          <label style="text-decoration: overline;" for="overline">Overline?</label><br />
+          <input name="decoration" id="overline" type="radio">
+        </p>
+        <p>
+          <label style="font-variant: small-caps;" for="smallcaps">Smallcaps?</label><br />
+          <input id="smallcaps" type="checkbox">
+        </p>
+      </div>
+
+      <div style="width: 500px; text-align: center;">
+        <p>
+          <label for="animated">Animated Style:</label><br />
+          <select id="animated" style="padding: 0 5px 0 5px; width: 150px; text-align: center; height: 30px; border: 1px solid #DBDBDB; outline: 0; box-shadow: 2px 2px 0 #D6D6D6;">
+            <option value="none">None</option>
+            <option value="sparkle_green_light">Sparkle Green Light</option>
+            <option value="sparkle_blue">Sparkle Blue</option>
+            <option value="sparkle_brown">Sparkle Brown</option>
+            <option value="sparkle_red">Sparkle Red</option>
+            <option value="sparkle_green">Sparkle Green</option>
+            <option value="sparkle_lime">Sparkle Lime</option>
+            <option value="sparkle_blue_light">Sparkle Blue Light</option>
+            <option value="sparkle_white">Sparkle White</option>
+            <option value="sparkle_yellow_light">Sparkle Yellow Light</option>
+            <option value="sparkle_grey">Sparkle Grey</option>
+            <option value="sparkle_orange">Sparkle Orange</option>
+            <option value="sparkle_teal">Sparkle Teal</option>
+            <option value="sparkle_purple">Sparkle Purple</option>
+            <option value="sparkle_yellow">Sparkle Yellow</option>
+            <option value="sparkle_pink">Sparkle Pink</option>
+            <option value="sparkle_pink_light">Sparkle Pink Light</option>
+            <option value="fire_navy">Fire Navy</option>
+            <option value="fire_pink">Fire Pink</option>
+            <option value="fire_orange">Fire Orange</option>
+            <option value="fire_brown">Fire Brown</option>
+            <option value="fire_purple">Fire Purple</option>
+            <option value="fire_blue">Fire Blue</option>
+            <option value="fire_lime">Fire Lime</option>
+            <option value="fire_red">Fire Red</option>
+            <option value="fire_white">Fire White</option>
+            <option value="fire_black">Fire Black</option>
+            <option value="fire_green">Fire Green</option>
+            <option value="fire_teal">Fire Teal</option>
+            <option value="fire_grey">Fire Grey</option>
+          </select>
+        </p>
+
+        <p>
+          <label for="color">Color:</label><br />
+          <input style="padding: 0 5px 0 5px; width: 60px; text-align: center; height: 30px; border: 1px solid #DBDBDB; outline: 0; box-shadow: 2px 2px 0 #D6D6D6;" id="color" class="jscolor" value="9155E0">
+        </p>
+
+        <p>
+          <label for="shadow">Text Shadow?</label> <input id="shadow" type="checkbox"><br />
+          <input style="padding: 0 5px 0 5px; width: 17px; text-align: center; height: 30px; border: 1px solid #DBDBDB; outline: 0; box-shadow: 2px 2px 0 #D6D6D6;" type="number" id="shadow1" value="2"><span style="vertical-align: sub; margin-left: 3px;">px</span>
+          <input style="padding: 0 5px 0 5px; width: 17px; text-align: center; height: 30px; border: 1px solid #DBDBDB; outline: 0; box-shadow: 2px 2px 0 #D6D6D6;" type="number" id="shadow2" value="2"><span style="vertical-align: sub; margin-left: 3px;">px</span>
+          <input style="padding: 0 5px 0 5px; width: 17px; text-align: center; height: 30px; border: 1px solid #DBDBDB; outline: 0; box-shadow: 2px 2px 0 #D6D6D6;" type="number" id="shadow3" value="1"><span style="vertical-align: sub; margin-left: 3px;">px</span>
+          <input style="margin-left: 5px; padding: 0 5px 0 5px; width: 60px; text-align: center; height: 30px; border: 1px solid #DBDBDB; outline: 0; box-shadow: 2px 2px 0 #D6D6D6;" id="shadowcolor" class="jscolor" value="FFFFFF">
+        </p>
+
+        <p>
+          <label for="exampletext">Preview text:</label><br />
+          <input style="padding: 0 5px 0 5px; width: 250px; height: 30px; border: 1px solid #DBDBDB; outline: 0; box-shadow: 2px 2px 0 #D6D6D6;" id="exampletext" type="text" value="Administrator">
+        </p>
+
+        <p style="margin-top: 50px;">
+          Live Preview:
+        </p>
+      </div>
+
+      <div style="float: left; width: 248px; height: 80px; line-height: 80px; text-align: center; background: #1E202B;">
+        <div style="position: absolute; color: #fff; font-size: 8px; margin-top: -34px; margin-left: 2px;">DARK PREVIEW</div>
+        <span class="finalString"></span>
+      </div>
+
+      <div style="float: left; width: 248px; height: 80px; line-height: 80px; text-align: center; background: #b7bacd; margin-left: 4px;">
+        <div style="position: absolute; color: #000; font-size: 8px; margin-top: -34px; margin-left: 2px;">LIGHT PREVIEW</div>
+        <span class="finalString"></span>
+      </div>
+
+      <p style="margin-top: 10px;">&nbsp;</p>
+
+      <div style="width: 500px; text-align: center;">
+        Code for IPS:<br />
+        <input style="text-align: right; padding: 0 5px 0 5px; width: 150px; height: 30px; border: 1px solid #DBDBDB; outline: 0; box-shadow: 2px 2px 0 #D6D6D6; margin-right: 4px;" id="finalLeft" type="text">
+        <span style="color: #696969;" id="insertPreviewtext"></span>
+        <input style="padding: 0 5px 0 5px; width: 150px; height: 30px; border: 1px solid #DBDBDB; outline: 0; box-shadow: 2px 2px 0 #D6D6D6; margin-left: 4px;" id="finalRight" type="text">
+        <br /><br />
+        <sup>Now go to your <b>IPS Admin CP</b> - <b>Members</b> - <b>Group</b> - <b>Edit group</b>:<br /></sup>
+        <img src="https://raw.githubusercontent.com/Nyqi/animated-tags/gh-pages/info.png" alt="INFO" />
+      </div>
+    </form>
   </body>
 </html>
